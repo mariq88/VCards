@@ -18,7 +18,10 @@ var EmployeeView = function(employee) {
         navigator.geolocation.watchPosition(
             function(position) {
                 $('.location', this.el).html(position.coords.latitude + ',' +position.coords.longitude);           
+var img = new Image();
+    img.src = "http://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
 
+    document.appendChild(img);
             },
             function(error) {
                 alert('code: '    + error.code    + '\n' +
@@ -48,34 +51,29 @@ var EmployeeView = function(employee) {
         return false;
     };
 
-    var app = app || {};
-    (function(a) {
-          var pictureSource = null;
-    var destinationType = null;
-    a.pictures = {
-        init:function() {
-             pictureSource = navigator.camera.PictureSourceType;
-             destinationType = navigator.camera.DestinationType;
+    this.changePicture = function(event) {
+    event.preventDefault();
+    if (!navigator.camera) {
+        app.showAlert("Camera API not supported", "Error");
+        return;
+    }
+    var options =   {   quality: 50,
+                        destinationType: Camera.DestinationType.DATA_URL,
+                        sourceType: 1,      // 0:Photo Library, 1=Camera, 2=Saved Photo Album
+                        encodingType: 0     // 0=JPG 1=PNG
+                    };
+ 
+    navigator.camera.getPicture(
+        function(imageData) {
+            $('.employee-image', this.el).attr('src', "data:image/jpeg;base64," + imageData);
         },
-        close: function() {            
+        function() {
+            app.showAlert('Error taking picture', 'Error');
         },
-        get:function() {            
-            
-            navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
-                destinationType: destinationType.DATA_URL });
-            
-            function onSuccess(imageData) {
-            var image = document.getElementById('smallImage');
-            image.src = "data:image/jpeg;base64," + imageData;
-        }
-            
-            function onFail(message) {
-            alert('Failed because: ' + message);
-        }
-        }
-    };
-    }(app));
-
+        options);
+ 
+    return false;
+};
     this.initialize();
 
 }
