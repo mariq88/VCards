@@ -4,11 +4,13 @@
         <link href="kendo/styles/kendo.mobile.all.min.css">
     </head>
     <body>
-    <div id="capture-view" data-id="capture-view" data-role="view" data-layout="api-layout" data-title="Capture API"
-            data-show="app.pictures.init">
+
+        <div id="capture-view" data-id="capture-view" data-role="view" data-layout="api-layout" data-title="Capture API"
+             data-show="app.pictures.init">
             <button data-role="touch" data-tap="app.pictures.get">Capture Photo</button> <br>
             <img style="display:block;margin:5px auto; width:120px; height:120px;" id="smallImage" src="#" />
         </div>
+     
         
         <script id="home-tpl" type="text/x-handlebars-template">
             <div class='header'><h1>Home</h1></div>
@@ -35,9 +37,9 @@
             <li><a href="sms:{{cellPhone}}">SMS<br/>{{cellPhone}}</a></li>
             <li><a href="#" class="add-location-btn">Add Location</a></li>
             <li><a href="#" class="add-contact-btn">Add to Contacts</a></li>
-             <li>
-                    <a href="#capture-view">Capture</a>
-                </li>
+            <li>
+            <a href="#capture-view">Capture</a>
+            </li>
             </ul>
             </div>
         </script>
